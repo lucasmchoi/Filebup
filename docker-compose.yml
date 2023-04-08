@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  filebup:
+    image: ghcr.io/lucasmchoi/filebup:latest
+    container_name: filebup
+    restart: always
+    volumes:
+      - ~/Docker/config:/filebup/config
+      - ~/Docker/repos:/filebup/repos
+      - ~/Pathtobackup/:/filebup/volumes

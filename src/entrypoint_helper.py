@@ -10,7 +10,6 @@ with open('/filebup/config/config.yaml') as configf:
 for volume in configl.keys():
     if configl[volume]['service'] == 'borg':
         localpath = configl[volume]['localpath']
-        borgurl = configl[volume]['borgurl']
         borguser = configl[volume]['borguser']
         borghost = configl[volume]['borghost']
         borgport = configl[volume]['borgport']

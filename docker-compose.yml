@@ -6,5 +6,4 @@ services:
     restart: always
     volumes:
       - ~/Docker/config:/filebup/config
-      - ~/Docker/repos:/filebup/repos
       - ~/Pathtobackup/:/filebup/volumes

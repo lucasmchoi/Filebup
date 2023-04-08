@@ -90,7 +90,7 @@ for volume in configl.keys():
             helperchecksh += "unset healthcheckurl BORG_RSH BORG_PASSPHRASE REPOSITORY m"
 
             with open('/filebup/cronhelpers/{}-check.sh'.format(volume), 'w') as writer:
-                writer.write(helperpruneesh)
+                writer.write(helperchecksh)
 
             subprocess.run(['echo ''"''{} sh /filebup/cronhelpers/{}-check.sh''"'' >> /var/spool/cron/crontabs/root'.format(checkschedule, volume)], shell=True) 
 

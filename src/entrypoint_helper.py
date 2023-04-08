@@ -36,7 +36,7 @@ for volume in configl.keys():
             print('Volume {} backup with borg already in cronfile'.format(volume))
         else:
             helpercreatesh = "#!/bin/bash\n"
-            helpercreatesh += "chmod 400 /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helpercreatesh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helpercreatesh += "healthcheckurl={}\n".format(hcheckurlbup)
             helpercreatesh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
             helpercreatesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
@@ -55,7 +55,7 @@ for volume in configl.keys():
 
 
             helperpruneesh = "#!/bin/bash\n"
-            helperpruneesh += "chmod 400 /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helperpruneesh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helperpruneesh += "healthcheckurl={}\n".format(hcheckurlprune)
             helperpruneesh += "healthcheckurlcompact={}\n".format(hcheckurlcompact)
             helperpruneesh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
@@ -79,7 +79,7 @@ for volume in configl.keys():
 
 
             helperchecksh = "#!/bin/bash\n"
-            helperchecksh += "chmod 400 /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helperchecksh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helperchecksh += "healthcheckurl={}\n".format(hcheckurlcheck)
             helperchecksh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
             helperchecksh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)

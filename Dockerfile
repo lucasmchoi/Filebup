@@ -5,5 +5,6 @@ COPY src /filebup
 RUN mkdir /filebup/config
 RUN mkdir /filebup/volumes
 RUN mkdir /filebup/cronhelpers
+RUN mkdir -p /root/.ssh/
 RUN chmod +x /filebup/entrypoint.sh
 ENTRYPOINT ["/filebup/entrypoint.sh"] 

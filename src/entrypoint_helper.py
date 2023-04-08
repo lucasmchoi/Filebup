@@ -36,10 +36,9 @@ for volume in configl.keys():
             print('Volume {} backup with borg already in cronfile'.format(volume))
         else:
             helpercreatesh = "#!/bin/bash\n"
-            helpercreatesh += "ssh-keyscan {} > ~/.ssh/known_hosts\n".format(borghost)
             helpercreatesh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helpercreatesh += "healthcheckurl={}\n".format(hcheckurlbup)
-            helpercreatesh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helpercreatesh += "export BORG_RSH='ssh -o StrictHostKeyChecking=no -i /filebup/config/secrets/{}'\n".format(borgsshkey)
             helpercreatesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helpercreatesh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helpercreatesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
@@ -56,11 +55,10 @@ for volume in configl.keys():
 
 
             helperpruneesh = "#!/bin/bash\n"
-            helperpruneesh += "ssh-keyscan {} > ~/.ssh/known_hosts\n".format(borghost)
             helperpruneesh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helperpruneesh += "healthcheckurl={}\n".format(hcheckurlprune)
             helperpruneesh += "healthcheckurlcompact={}\n".format(hcheckurlcompact)
-            helperpruneesh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helperpruneesh += "export BORG_RSH='ssh -o StrictHostKeyChecking=no -i /filebup/config/secrets/{}'\n".format(borgsshkey)
             helperpruneesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helperpruneesh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helperpruneesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
@@ -81,10 +79,9 @@ for volume in configl.keys():
 
 
             helperchecksh = "#!/bin/bash\n"
-            helperchecksh += "ssh-keyscan {} > ~/.ssh/known_hosts\n".format(borghost)
             helperchecksh += "chmod 400 /filebup/config/secrets/{}\n".format(borgsshkey)
             helperchecksh += "healthcheckurl={}\n".format(hcheckurlcheck)
-            helperchecksh += "export BORG_RSH='ssh -i /filebup/config/secrets/{}'\n".format(borgsshkey)
+            helperchecksh += "export BORG_RSH='ssh -o StrictHostKeyChecking=no -i /filebup/config/secrets/{}'\n".format(borgsshkey)
             helperchecksh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helperchecksh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helperchecksh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"

@@ -41,7 +41,7 @@ for volume in configl.keys():
             helpercreatesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helpercreatesh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helpercreatesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
-            helpercreatesh += "m=$(borg create -s --show-version --show-rc -c 300 -C auto,lzma,6 $REPOSITORY::{hostname}-{now:%Y%m%d-%H%M} /filebup/volumes/{} 2>&1)\n".format(localpath)
+            helpercreatesh += "m=$(borg create -s --show-version --show-rc -c 300 -C auto,lzma,6 $REPOSITORY::$(date +'%Y%m%d-%H%M') /filebup/volumes/{} 2>&1)\n".format(localpath)
             helpercreatesh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurl/$?\n"
             helpercreatesh += "unset healthcheckurl BORG_RSH BORG_PASSPHRASE REPOSITORY m"
 

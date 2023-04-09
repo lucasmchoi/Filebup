@@ -42,10 +42,10 @@ for volume in configl.keys():
             helpercreatesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helpercreatesh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helpercreatesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
-            helpercreatesh += "sh /filebup/dockerids_helper.sh\n"
-            helpercreatesh += "sh /filebup/stop_helper.sh\n"
+            helpercreatesh += "dockerids=$(curl -s -XGET --unix-socket /var/run/docker.sock http://localhost/containers/json | jq -r '.[].Id');dockernum=$(echo '$dockerids' | wc -l);ownshortid=$HOSTNAME\n"
+            helpercreatesh += "for id in $dockerids; do; [[ $id = $ownshortid* ]] || curl -s -XPOST --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' http:/containers/$id/stop; done; while true; do; currentnum=$(curl --silent -XGET --unix-socket /var/run/docker.sock http://localhost/containers/json | jq -r '.[].Id' | wc -l); if [ $currentnum -ne $dockernum ]; then; break; fi; sleep 1; done\n"
             helpercreatesh += "m=$(borg create -s --show-version --show-rc -c 300 -C auto,lzma,6 $REPOSITORY::$(date +'%Y%m%d-%H%M') /filebup/volumes/{} 2>&1)\n".format(localpath)
-            helpercreatesh += "sh /filebup/start_helper.sh\n"
+            helpercreatesh += "for id in $dockerids; do; [[ $id = $ownshortid* ]] || curl -s -XPOST --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' http:/containers/$id/start; done; while true; do; currentnum=$(curl --silent -XGET --unix-socket /var/run/docker.sock http://localhost/containers/json | jq -r '.[].Id' | wc -l); if [ $currentnum -eq $dockernum ]; then; break; fi; sleep 1; done; unset dockerids dockernum ownshortid currentnum\n"
             helpercreatesh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurl/$?\n"
             helpercreatesh += "unset healthcheckurl BORG_RSH BORG_PASSPHRASE REPOSITORY m"
 

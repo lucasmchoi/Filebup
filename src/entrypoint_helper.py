@@ -42,6 +42,7 @@ for volume in configl.keys():
             helpercreatesh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helpercreatesh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helpercreatesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
+            helpercreatesh += "dig {}\n".format(borghost)
             helpercreatesh += "dockerids=$(curl -s -XGET --unix-socket /var/run/docker.sock http://localhost/containers/json | jq -r '.[].Id')\n"
             helpercreatesh += "ownshortid=$HOSTNAME\n"
             helpercreatesh += "for id in $dockerids\n"

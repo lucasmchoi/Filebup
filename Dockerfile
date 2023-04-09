@@ -1,5 +1,5 @@
 FROM alpine:3.17
-RUN apk add --no-cache bash curl python3 py3-pip borgbackup openssh jq bind-tools
+RUN apk add --no-cache bash curl python3 py3-pip borgbackup openssh jq
 RUN pip3 install pyyaml
 COPY src /filebup
 RUN mkdir /filebup/config

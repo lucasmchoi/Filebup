@@ -77,7 +77,7 @@ for volume in configl.keys():
             helperpruneesh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurl/$?\n"
             helperpruneesh += "unset m\n"
             helperpruneesh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurlcompact/start\n"
-            helperpruneesh += "m=$(borg compact $REPOSITORY 2>&1)\n"
+            helperpruneesh += "m=$(borg compact -v $REPOSITORY 2>&1)\n"
             helperpruneesh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurlcompact/$?\n"
             helperpruneesh += "unset healthcheckurl healthcheckurlcompact BORG_RSH BORG_PASSPHRASE REPOSITORY m"
 
@@ -96,7 +96,7 @@ for volume in configl.keys():
             helperchecksh += "export BORG_PASSPHRASE='{}'\n".format(borgpass)
             helperchecksh += "REPOSITORY='ssh://{}@{}:{}/./{}'\n".format(borguser, borghost, borgport, borgdir)
             helperchecksh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
-            helperchecksh += "m=$(borg check --verbose --progress $REPOSITORY 2>&1)\n"
+            helperchecksh += "m=$(borg check -v $REPOSITORY 2>&1)\n"
             helperchecksh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurl/$?\n"
             helperchecksh += "unset healthcheckurl BORG_RSH BORG_PASSPHRASE REPOSITORY m"
 

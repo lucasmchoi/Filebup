@@ -1,26 +1,3 @@
-volume-1:
-  service: borg
-  localpath: 
-  borgurl: 
-  borguser: 
-  borghost:
-  borgport:
-  borgdir:
-  borgsshkey: main
-  borgpass:
-
-  borgschedule: "5 * * * *"
-  hcheckurlbup: https://hc-ping.com/...
-  
-
-  pruneschedule: "5 * * * *"
-  hcheckurlprune: https://hc-ping.com/...
-  hcheckurlcompact: https://hc-ping.com/...
-
-  checkschedule: "5 * * * *"
-  hcheckurlcheck: https://hc-ping.com/...
-volume-2:
-  service: borg
-
-  schedule: "10 * * * *"
-  hcheckurl: https://hc-ping.com/...
+cron1:
+  schedule: "* */6 * * *"
+  command: "borgmatic --verbosity -1 --syslog-verbosity 1"
